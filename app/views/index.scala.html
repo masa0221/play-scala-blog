@@ -1,0 +1,18 @@
+@(user: Form[CreateUserForm])(implicit messages: Messages)
+
+@import helper._
+
+@main("Welcome to Play") {
+	<script type='text/javascript' src='@routes.Assets.versioned("javascripts/index.js")'></script>
+	<ul id="users"></ul>
+
+  @form(routes.UserController.addUser()) {
+		@inputText(user("email"))
+	  	@inputPassword(user("password"))
+		@inputText(user("username"))
+
+		<div class="buttons">
+			<input type="submit" value="Add User"/>
+		</div>
+	}
+}
