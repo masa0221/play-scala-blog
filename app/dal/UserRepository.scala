@@ -78,7 +78,19 @@ class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
   /**
    * List all the user in the database.
    */
-  def list(): Future[Seq[User]] = db.run {
+  def list: Future[Seq[User]] = db.run {
     user.result
   }
+
+  def find(email: String, password: String): Boolean = {
+    val result = db.run {
+      user.filter(row => (row.email === email) && (row.password === password)).length.result
+    }.value
+
+    result match {
+      case Some(t) => t.get > 0
+      case _ => false
+    }
+  }
+
 }

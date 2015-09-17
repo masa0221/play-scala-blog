@@ -1,14 +1,9 @@
 package controllers
 
-import akka.actor.Status.Success
-import play.api._
 import play.api.mvc._
 import play.api.i18n._
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.data.validation.Constraints._
-import play.api.libs.json.Json
-import models._
 import dal._
 
 import scala.concurrent.{ ExecutionContext, Future }
@@ -33,7 +28,7 @@ class UserController @Inject() (repo: UserRepository, val messagesApi: MessagesA
    * The index action.
    */
   def index = Action {
-    Ok(views.html.index(userForm))
+    Ok(views.html.edit(userForm))
   }
 
   /**
@@ -48,7 +43,7 @@ class UserController @Inject() (repo: UserRepository, val messagesApi: MessagesA
       // We also wrap the result in a successful future, since this action is synchronous, but we're required to return
       // a future because the user creation function returns a future.
       errorForm => {
-        Future.successful(Ok(views.html.index(errorForm)))
+        Future.successful(Ok(views.html.edit(errorForm)))
       },
       // There were no errors in the from, so create the user.
       user => {
@@ -60,12 +55,9 @@ class UserController @Inject() (repo: UserRepository, val messagesApi: MessagesA
     )
   }
 
-  /**
-   * A REST endpoint that gets all the users as JSON.
-   */
-  def getUsers = Action.async {
-  	repo.list().map { users =>
-      Ok(Json.toJson(users))
+  def users = Action.async { implicit result =>
+    repo.list.map {
+      all_users => Ok(views.html.users(all_users))
     }
   }
 }
