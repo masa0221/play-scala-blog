@@ -3,6 +3,13 @@
 @import helper._
 
 @main("Login") {
+    @if(loginUser.hasGlobalErrors) {
+        <ul>
+            @for(error <- loginUser.globalErrors) {
+                <li>@error.message</li>
+            }
+        </ul>
+    }
     @form(routes.LoginController.login) {
         @inputText(loginUser("email"))
         @inputPassword(loginUser("password"))

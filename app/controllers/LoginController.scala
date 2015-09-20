@@ -30,7 +30,6 @@ class LoginController @Inject() (repo: UserRepository, val messagesApi: Messages
         Future.successful(Ok(views.html.index(errorForm)))
       },
       user => {
-        println("login!!!.")
         Future.successful(Ok(views.html.board("Login complete!")))
       }
     )
