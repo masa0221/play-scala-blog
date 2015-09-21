@@ -3,8 +3,9 @@
 # ~~~~
 
 # Home page
-GET         /                    controllers.LoginController.index
-POST        /                    controllers.LoginController.login
+GET         /                    controllers.BoardController.login
+POST        /authentication      controllers.BoardController.authentication
+GET         /logout              controllers.BoardController.logout
 GET         /users               controllers.UserController.users
 GET         /users/add           controllers.UserController.index
 POST        /users/add           controllers.UserController.addUser

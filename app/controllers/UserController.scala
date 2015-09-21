@@ -25,7 +25,7 @@ class UserController @Inject() (repo: UserRepository, val messagesApi: MessagesA
   }
 
   /**
-   * The index action.
+   * The login action.
    */
   def index = Action {
     Ok(views.html.edit(userForm))
@@ -39,7 +39,7 @@ class UserController @Inject() (repo: UserRepository, val messagesApi: MessagesA
   def addUser = Action.async { implicit request =>
     // Bind the form first, then fold the result, passing a function to handle errors, and a function to handle succes.
     userForm.bindFromRequest.fold(
-      // The error function. We return the index page with the error form, which will render the errors.
+      // The error function. We return the login page with the error form, which will render the errors.
       // We also wrap the result in a successful future, since this action is synchronous, but we're required to return
       // a future because the user creation function returns a future.
       errorForm => {
@@ -48,7 +48,7 @@ class UserController @Inject() (repo: UserRepository, val messagesApi: MessagesA
       // There were no errors in the from, so create the user.
       user => {
         repo.create(user.email, user.password, user.username).map { _ =>
-          // If successful, we simply redirect to the index page.
+          // If successful, we simply redirect to the login page.
           Redirect(routes.UserController.index)
         }
       }

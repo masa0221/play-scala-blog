@@ -83,14 +83,15 @@ class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
   }
 
   def find(email: String, password: String): Boolean = {
-    val result = db.run {
-      user.filter(row => (row.email === email) && (row.password === password)).length.result
-    }.value
+    true
+    // わからん。後で
+    // val result = db.run {
+    //   user.filter(row => (row.email === email) && (row.password === password)).length.result
+    // }.value
 
-    result match {
-      case Some(t) => t.get > 0
-      case _ => false
-    }
+    // result match {
+    //   case Some(t) => t.get > 0
+    //   case _ => false
+    // }
   }
-
 }
