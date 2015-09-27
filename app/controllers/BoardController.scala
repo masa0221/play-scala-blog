@@ -30,13 +30,15 @@ class BoardController @Inject() (repo: UserRepository, val messagesApi: Messages
         Future.successful(Ok(views.html.login(errorForm)))
       },
       user => {
-        Future.successful(Ok(views.html.board("Ok")).withSession("email" -> user.email))
+        Future.successful(
+          Redirect(routes.BoardController.board).withSession("email" -> user.email)
+        )
       }
     )
   }
 
   def board = isAuthenticated { email => _ =>
-    Ok(views.html.board("You've been logged in!"))
+    Ok(views.html.board())
   }
 
   def logout = Action {

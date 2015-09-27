@@ -5,6 +5,7 @@
 # Home page
 GET         /                    controllers.BoardController.login
 POST        /authentication      controllers.BoardController.authentication
+GET         /board               controllers.BoardController.board
 GET         /logout              controllers.BoardController.logout
 GET         /users               controllers.UserController.users
 GET         /users/add           controllers.UserController.index
