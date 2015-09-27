@@ -15,7 +15,7 @@ class BoardController @Inject() (repo: UserRepository, val messagesApi: Messages
     mapping(
       "email" -> nonEmptyText,
       "password" -> nonEmptyText
-    )(LoginUserForm.apply)(LoginUserForm.unapply) verifying("Invalid User!", user =>
+    )(LoginUserForm.apply)(LoginUserForm.unapply).verifying("Invalid User!", user =>
       repo.find(user.email, user.password)
     )
   }
