@@ -1,0 +1,21 @@
+@(loginUser: Form[LoginUserForm])(implicit messages: Messages)
+
+@import helper._
+
+@main("Login") {
+    @if(loginUser.hasGlobalErrors) {
+        <ul>
+            @for(error <- loginUser.globalErrors) {
+                <li>@error.message</li>
+            }
+        </ul>
+    }
+    @form(routes.BoardController.authentication) {
+        @inputText(loginUser("email"))
+        @inputPassword(loginUser("password"))
+
+        <div class="buttons">
+            <input type="submit" value="Login"/>
+        </div>
+    }
+}

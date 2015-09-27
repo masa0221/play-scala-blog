@@ -1,0 +1,21 @@
+@(users: Seq[User])
+
+@main("Users") {
+    <table>
+        <tbody>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Username</th>
+            </tr>
+            @users.map { user =>
+            <tr>
+                <td>@user.id</td>
+                <td>@user.email</td>
+                <td>@user.username</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+

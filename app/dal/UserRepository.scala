@@ -6,7 +6,8 @@ import models.User
 import play.api.db.slick.DatabaseConfigProvider
 import slick.driver.JdbcProfile
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContext, Future}
 
 /**
  * A repository for user.
@@ -78,7 +79,19 @@ class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
   /**
    * List all the user in the database.
    */
-  def list(): Future[Seq[User]] = db.run {
+  def list: Future[Seq[User]] = db.run {
     user.result
+  }
+
+  def find(email: String, password: String): Boolean = {
+    val result = db.run {
+      user.filter(u => u.email === email && u.password === password).length.result
+    }
+
+    Await.result(result, Duration.Inf)
+    result.value match {
+      case None => false
+      case Some(v) => v.get > 0
+    }
   }
 }
