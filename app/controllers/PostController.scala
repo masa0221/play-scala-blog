@@ -5,15 +5,14 @@ import javax.inject.Inject
 import dal.PostRepository
 import models.Post
 import org.joda.time.DateTime
-import play.api.i18n._
 import play.api.libs.json._
 import play.api.mvc._
 
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ExecutionContext, Future}
 
 
-class PostController @Inject() (repo: PostRepository, val messagesApi: MessagesApi)
-                                 (implicit ec: ExecutionContext) extends Controller with I18nSupport{
+class PostController @Inject() (repo: PostRepository)
+                                 (implicit ec: ExecutionContext) extends Controller{
 
   def list = Action.async { implicit rs =>
     repo.list.map { posts =>
