@@ -1,3 +1,12 @@
+@*
+@(user: Form[CreateUserForm])(implicit messages: Messages)
+*@
+@import helper._
+
 @main("Board") {
     <a href="./logout">Logout</a>
+    @*
+    @form(routes.BoardController.board.post)
+    *@
 }
+

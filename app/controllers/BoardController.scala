@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject.Inject
 
-import dal.UserRepository
+import dal.{PostRepository, UserRepository}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -10,7 +10,7 @@ import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class BoardController @Inject() (repo: UserRepository, val messagesApi: MessagesApi) (implicit ec: ExecutionContext) extends Controller with I18nSupport with Secured {
+class BoardController @Inject() (repo: UserRepository, postRepo: PostRepository, val messagesApi: MessagesApi) (implicit ec: ExecutionContext) extends Controller with I18nSupport with Secured {
   val loginUser: Form[LoginUserForm] = Form {
     mapping(
       "email" -> nonEmptyText,
