@@ -33,6 +33,10 @@ class PostRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
       ) +=(user_id, message, create_at)
   }
 
+  def delete(id: Long): Future[Int] = db.run {
+    post.filter(_.id === id).delete
+  }
+
   def list(): Future[Seq[Post]] = db.run {
     post.result
   }

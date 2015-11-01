@@ -31,4 +31,11 @@ class PostController @Inject() (repo: PostRepository)
       }
     )
   }
+
+  def delete(id: Long) = Action.async { implicit rs =>
+    repo.delete(id).map {
+      case 0 => BadRequest(Json.obj("result" -> "failure"))
+      case _ => Ok(Json.obj("result" -> "success"))
+    }
+  }
 }
