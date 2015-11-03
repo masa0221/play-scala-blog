@@ -3,16 +3,17 @@
 # ~~~~
 
 # Home page
-GET         /                      controllers.BoardController.login
-POST        /authentication        controllers.BoardController.authentication
-GET         /board                 controllers.BoardController.board
-GET         /logout                controllers.BoardController.logout
-GET         /users                 controllers.UserController.users
-GET         /users/add             controllers.UserController.index
-POST        /users/add             controllers.UserController.addUser
-GET         /board/posts           controllers.PostController.list
-POST        /board/add             controllers.PostController.add
-POST        /board/delete/:id      controllers.PostController.delete(id: Long)
+GET         /                        controllers.BoardController.login
+POST        /authentication          controllers.BoardController.authentication
+GET         /board                   controllers.BoardController.board
+GET         /logout                  controllers.BoardController.logout
+GET         /users                   controllers.UserController.users
+GET         /users/add               controllers.UserController.index
+POST        /users/add               controllers.UserController.addUser
+GET         /board/posts             controllers.PostController.list
+POST        /board/add               controllers.PostController.add
+POST        /board/delete/:id        controllers.PostController.delete(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file          controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file            controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file            controllers.Assets.at(path="/public", file)

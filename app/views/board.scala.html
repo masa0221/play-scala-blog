@@ -1,12 +1,11 @@
-@*
-@(user: Form[CreateUserForm])(implicit messages: Messages)
-*@
-@import helper._
-
 @main("Board") {
+    <script src='@routes.Assets.at("javascripts/board.js")' type="text/javascript"></script>
+
     <a href="./logout">Logout</a>
-    @*
-    @form(routes.BoardController.board.post)
-    *@
+
+    <textarea id="message"></textarea>
+    <input id="send" type="button" value="送信" />
+
+    <ul id="posts"></ul>
 }
 
