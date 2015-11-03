@@ -1,4 +1,4 @@
-name := """play-scala-blog"""
+name := """play-scala-board"""
 
 version := "1.0-SNAPSHOT"
 
