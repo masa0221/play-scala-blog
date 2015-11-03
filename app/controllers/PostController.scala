@@ -22,7 +22,7 @@ class PostController @Inject() (repo: PostRepository)
 
   def add = Action.async(parse.json) { implicit rs =>
     rs.body.validate[Post].map { post =>
-      repo.add(post.user_id, post.message, DateTime.now.toString).map { _ =>
+      repo.add(post.user_id, post.message, Some(DateTime.now.toString)).map { _ =>
         Ok(Json.obj("result" -> "success"))
       }
     }.recoverTotal ( e =>

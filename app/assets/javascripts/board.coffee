@@ -27,7 +27,6 @@ $ ->
     data =
       "user_id" : 1
       "message" : $("#message").val()
-      "create_at" : "2015-11-03 13:55:00"
     $.ajax
       url: "/board/add"
       type: "POST"

@@ -20,13 +20,13 @@ class PostRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
     def id = column[Option[Long]]("id", O.PrimaryKey, O.AutoInc)
     def user_id = column[Long]("user_id")
     def message = column[String]("message")
-    def create_at = column[String]("create_at")
+    def create_at = column[Option[String]]("create_at")
     def * = (id, user_id, message, create_at) <> ((Post.apply _).tupled, Post.unapply)
   }
 
   private val post = TableQuery[PostTable]
 
-  def add(user_id: Long, message: String, create_at: String): Future[Post] = db.run {
+  def add(user_id: Long, message: String, create_at: Option[String]): Future[Post] = db.run {
     (post.map(p => (p.user_id, p.message, p.create_at))
       returning post.map(_.id)
       into ((postInfo, id) => Post(id, postInfo._1, postInfo._2, postInfo._3))
