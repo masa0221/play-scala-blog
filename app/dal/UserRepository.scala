@@ -94,4 +94,8 @@ class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
       case Some(v) => v.get > 0
     }
   }
+
+  def get(email: String): Future[Option[User]] = db.run {
+    user.filter(u => u.email === email).result.headOption
+  }
 }

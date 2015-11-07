@@ -30,9 +30,9 @@ class BoardController @Inject() (repo: UserRepository, postRepo: PostRepository,
         Future.successful(Ok(views.html.login(errorForm)))
       },
       user => {
-        Future.successful(
+        Future.successful {
           Redirect(routes.BoardController.board).withSession("email" -> user.email)
-        )
+        }
       }
     )
   }
