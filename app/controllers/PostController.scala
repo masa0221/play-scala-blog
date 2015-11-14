@@ -20,6 +20,12 @@ class PostController @Inject() (repo: PostRepository, user_repo: UserRepository)
     }
   }
 
+  def listWithUser = Action.async { implicit rs =>
+    repo.listWithUser.map { posts =>
+      Ok(Json.obj("posts" -> posts))
+    }
+  }
+
   def add = Action.async(parse.json) { implicit rs =>
     rs.body.validate[Post].map { post =>
       user_repo.get(rs.session.get("email").get).map {

@@ -29,7 +29,6 @@ class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
    */
   private class UserTable(tag: Tag) extends Table[User](tag, "users") {
 
-    /** The ID column, which is the primary key, and auto incremented */
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
     /** The email column */

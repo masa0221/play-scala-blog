@@ -2,11 +2,11 @@ package dal
 
 import javax.inject.{Inject, Singleton}
 
-import models.Post
+import models.{PostWithUser, Post, User}
 import play.api.db.slick.DatabaseConfigProvider
 import slick.driver.JdbcProfile
 
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class PostRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
@@ -39,6 +39,23 @@ class PostRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
 
   def list(): Future[Seq[Post]] = db.run {
     post.result
+  }
+
+  private class UserTable(tag: Tag) extends Table[User](tag, "users") {
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+    def email = column[String]("email")
+    def password = column[String]("password")
+    def username = column[String]("username")
+    def * = (id, email, password, username) <> ((User.apply _).tupled, User.unapply)
+  }
+  private val user = TableQuery[UserTable]
+
+  // def listWithUser(): Future[Seq[(Option[Long], Long, String, String, String)]] = db.run {
+  // def listWithUser(): Future[Seq[(Option[Long], String)]] = db.run {
+  // def listWithUser(): Future[Seq[PostWithUser]] = db.run {
+  def listWithUser(): Future[Seq[(Option[Long], Long, String, String, Option[String])]] = db.run {
+    (post join user on (_.user_id === _.id))
+    .map { case (p, u) => PostWithUser(p.id, u.id, u.username, p.message, p.create_at)}.result
   }
 }
 
