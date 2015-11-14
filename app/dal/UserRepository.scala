@@ -29,7 +29,6 @@ class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
    */
   private class UserTable(tag: Tag) extends Table[User](tag, "users") {
 
-    /** The ID column, which is the primary key, and auto incremented */
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
     /** The email column */
@@ -93,5 +92,9 @@ class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
       case None => false
       case Some(v) => v.get > 0
     }
+  }
+
+  def get(email: String): Future[Option[User]] = db.run {
+    user.filter(u => u.email === email).result.headOption
   }
 }
